@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Policies;
+
+use App\Models\User;
+
+/** Hanya admin yang mengelola akun dan peran. Menutup celah: menu tersembunyi saja tidak cukup (spesifikasi §21). */
+class UserPolicy
+{
+    public function viewAny(User $user): bool { return $user->isAdmin(); }
+    public function view(User $user, User $model): bool { return $user->isAdmin() || $user->is($model); }
+    public function create(User $user): bool { return $user->isAdmin(); }
+    public function update(User $user, User $model): bool { return $user->isAdmin(); }
+    // Admin tidak bisa menghapus akunnya sendiri, agar panel tidak kehilangan pengelola.
+    public function delete(User $user, User $model): bool { return $user->isAdmin() && ! $user->is($model); }
+    public function deleteAny(User $user): bool { return $user->isAdmin(); }
+    public function restore(User $user, User $model): bool { return $user->isAdmin(); }
+    public function forceDelete(User $user, User $model): bool { return false; }
+}

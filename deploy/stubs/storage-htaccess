@@ -1,0 +1,9 @@
+# Folder unggahan: hanya berkas statis. Skrip apa pun di sini tidak boleh dijalankan.
+Options -Indexes
+<FilesMatch "\.(php\d?|phtml|phar|pl|py|cgi|sh|shtml|htaccess)$">
+    Require all denied
+</FilesMatch>
+<IfModule mod_mime.c>
+    RemoveHandler .php .phtml .php3 .php4 .php5 .php7 .php8 .phar
+    RemoveType .php .phtml .php3 .php4 .php5 .php7 .php8 .phar
+</IfModule>
