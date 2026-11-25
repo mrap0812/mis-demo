@@ -710,15 +710,15 @@ a.chip:hover{background:var(--primary-soft);color:var(--primary)}
 .camp-nums dt{font-size:var(--fs-2xs);color:var(--muted)}
 .camp-nums dd{margin:0;font-weight:700;font-variant-numeric:tabular-nums;font-size:var(--fs-sm)}
 .camp-nums dd.need{color:var(--primary)}
-.camp-count{display:grid;gap:2px;font-size:var(--fs-sm);color:var(--muted)}
+.camp-count{font-size:var(--fs-sm);color:var(--muted);line-height:var(--lh-body)}
 .camp-count b{font-family:var(--font-display);font-size:var(--fs-xl);color:var(--fg)}
-.camp-count small{font-size:var(--fs-2xs)}
+.camp-count b{display:block}.camp-count small{display:block;margin-top:2px;font-size:var(--fs-2xs)}
 .camp-sum{font-size:var(--fs-sm);color:var(--muted)}
 .camp-quote{font-family:var(--font-display);font-size:var(--fs-sm)}
 .camp-quote span{font-family:var(--font-body);color:var(--muted);font-size:var(--fs-xs)}
 .camp-acc{display:flex;flex-wrap:wrap;gap:var(--s2) var(--s3);align-items:center;justify-content:space-between;padding:var(--s3);border-radius:var(--r-sm);background:var(--sunk);font-size:var(--fs-sm)}
 .camp-acc b{font-variant-numeric:tabular-nums;letter-spacing:.02em}
-@media (max-width:640px){.camp{grid-template-columns:72px minmax(0,1fr)}.camp-poster img{width:72px}.camp-nums{grid-template-columns:1fr 1fr}.camp-nums div:last-child{display:none}}
+@media (max-width:640px){.camp{display:block}.camp-poster{float:left;margin:0 var(--s3) var(--s2) 0}.camp-poster img{width:72px}.camp-body{display:block}.camp-body > * + *{margin-top:var(--s2)}.camp h3{margin-top:2px}.camp-acc,.camp-bar,.camp-nums{clear:both}.camp-nums{grid-template-columns:1fr 1fr}.camp-nums div:last-child{display:none}}
 
 /* ===== Navigasi ringkas: menu "Tentang masjid" ===== */
 nav.main .has-sub{position:relative}
@@ -745,3 +745,5 @@ nav.main .navsub > ul{position:absolute;right:0;top:calc(100% + 8px);min-width:2
 .hero4 .hc{box-shadow:0 20px 48px rgba(0,0,0,.3)}
 @media (max-width:899px){.hero4 .hc{box-shadow:none}}
 .camp-acc small{display:block;color:var(--muted);font-size:var(--fs-2xs)}
+@media (max-width:560px){.ps-table{min-width:0}.ps-table .ps-aux{display:none}.ps-table th,.ps-table td{padding:9px 4px;font-size:var(--fs-xs)}.ps-table .ps-hm{font-size:.6875rem}.ps-table tbody th{white-space:normal}}
+@media print{.ps-table .ps-aux{display:table-cell!important}}
