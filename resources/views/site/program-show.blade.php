@@ -16,7 +16,7 @@
       @if($program->is_free)<span>Gratis</span>@endif
       @if($w = $program->whenLabel($today))<span class="prog-when-hero">{{ $w }}</span>@endif
     </div>
-    @if($wa)<a class="btn gold prog-hero-cta" href="{{ $wa }}" target="_blank" rel="noopener">@include('site.partials.icon',['name'=>'wa','size'=>18]) {{ $program->contact_label ?: 'Hubungi' }}</a>@endif
+    @if($wa)<a class="btn gold prog-hero-cta" href="{{ $wa }}" target="_blank" rel="noopener">@include('site.partials.icon',['name'=>'wa','size'=>18]) {{ $program->contact_label ? 'Hubungi '.$program->contact_label : 'Hubungi via WhatsApp' }}</a>@endif
   </div></div>
 
   <div class="prog-grid">
@@ -25,7 +25,7 @@
         <h2 id="apa-h">Tentang program</h2>
         <p class="prog-lead">{{ $program->summary }}</p>
         <dl class="prog-dl">
-          @if($program->schedule)<div><dt>@include('site.partials.icon',['name'=>'cal','size'=>18]) Waktu</dt><dd>{{ $program->schedule }}</dd></div>@endif
+          {{-- Waktu sudah tampil di kepala halaman --}}
           @if($program->location)<div><dt>@include('site.partials.icon',['name'=>'pin','size'=>18]) Tempat</dt><dd>{{ $program->location }}</dd></div>@endif
           @if($program->audience)<div><dt>@include('site.partials.icon',['name'=>'users','size'=>18]) Untuk</dt><dd>{{ $program->audience }}</dd></div>@endif
           @if($program->organizer)<div><dt>@include('site.partials.icon',['name'=>'home','size'=>18]) Penyelenggara</dt><dd>@if($program->organizer_url)<a href="{{ $program->organizer_url }}" target="_blank" rel="noopener">{{ $program->organizer }}</a>@else{{ $program->organizer }}@endif</dd></div>@endif

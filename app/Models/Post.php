@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Storage;
+
 use App\Enums\PostStatus;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -68,8 +70,17 @@ class Post extends Model
     }
 
     /** Isi HTML yang sudah dibersihkan (spesifikasi §22: sanitasi rich text sebelum ditampilkan). */
-    public function safeBody(): string
+    public function safeBody(bool $dropLeadImage = false): string
     {
+        $body = (string) $this->body;
+        // Tulisan impor menyimpan URL gambar absolut dari host saat impor (mis. 127.0.0.1); arahkan ke host yang berjalan.
+        $base = rtrim(Storage::disk('public')->url(''), '/').'/';
+        $body = preg_replace('#https?://(?:127\.0\.0\.1|localhost)(?::\d+)?/storage/#i', $base, $body);
+        // Bila sampul sudah tampil, gambar pembuka yang sama di awal isi (pola WordPress) tidak perlu diulang.
+        if ($dropLeadImage) {
+            $body = preg_replace('#^\s*(?:<p>\s*</p>\s*)*<figure[^>]*>\s*(?:<a[^>]*>\s*)?<img[^>]*>\s*(?:</a>\s*)?(?:<figcaption.*?</figcaption>\s*)?</figure>#is', '', $body, 1);
+        }
+
         $config = (new HtmlSanitizerConfig)
             ->allowSafeElements()
             ->allowRelativeLinks()
@@ -77,7 +88,7 @@ class Post extends Model
             ->forceAttribute('a', 'rel', 'noopener noreferrer')
             ->allowRelativeMedias();
 
-        return self::liteYoutube((new HtmlSanitizer($config))->sanitize((string) $this->body));
+        return self::liteYoutube((new HtmlSanitizer($config))->sanitize($body));
     }
 
     /** Perkiraan waktu baca (200 kata per menit), minimal 1 menit. */

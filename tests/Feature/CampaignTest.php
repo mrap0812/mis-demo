@@ -36,7 +36,7 @@ class CampaignTest extends TestCase
         $this->assertSame(77, $r->daysToRamadhan(CarbonImmutable::parse('2026-11-23', 'Asia/Makassar')));
 
         $this->travelTo(CarbonImmutable::parse('2026-11-23 09:00', 'Asia/Makassar'));
-        $this->get('/')->assertOk()->assertSee('Kampanye donasi')->assertSee('77</b> hari menuju 1 Ramadhan 1448 H', false);
+        $this->get('/')->assertOk()->assertSee('Kampanye donasi')->assertSee('77 hari</b> lagi menuju 1 Ramadhan 1448 H', false);
         $this->travelTo(CarbonImmutable::parse('2027-03-10 09:00', 'Asia/Makassar'));
         $this->get('/infak')->assertOk()->assertDontSee('Menuju Ramadhan 1448 H')->assertSee('Renovasi Total Toilet Ikhwan');
     }

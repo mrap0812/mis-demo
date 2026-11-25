@@ -16,19 +16,19 @@
   <div class="ps-wrap" tabindex="0" role="region" aria-label="Tabel jadwal shalat {{ $month->translatedFormat('F Y') }}">
     <table class="ps-table">
       <caption class="sr-only">Jadwal shalat {{ $month->translatedFormat('F Y') }}, waktu WITA</caption>
-      <thead><tr><th scope="col">Tanggal</th><th scope="col" class="ps-hcol">Hijriah</th><th scope="col">Imsak</th><th scope="col">Subuh</th><th scope="col">Terbit</th><th scope="col">Dzuhur</th><th scope="col">Ashar</th><th scope="col">Maghrib</th><th scope="col">Isya</th></tr></thead>
+      <thead><tr><th scope="col">Tanggal</th><th scope="col" class="ps-hcol">Hijriah</th><th scope="col" class="ps-aux">Imsak</th><th scope="col">Subuh</th><th scope="col" class="ps-aux">Terbit</th><th scope="col">Dzuhur</th><th scope="col">Ashar</th><th scope="col">Maghrib</th><th scope="col">Isya</th></tr></thead>
       <tbody>
         @foreach($rows as $r)
         <tr class="{{ $r['today'] ? 'is-today' : '' }}{{ $r['date']->dayOfWeek === 5 ? ' is-jumat' : '' }}" @if($r['today']) aria-current="date" @endif>
           <th scope="row"><span class="ps-dow">{{ $r['date']->translatedFormat('D') }}</span> {{ $r['date']->day }}<small class="ps-hm">{{ $r['hijri'] }}</small></th>
           <td class="ps-h">{{ $r['hijri'] }}</td>
-          @foreach(['imsak', 'fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha'] as $k)<td>{{ PrayerTimes::hhmm($r['t'][$k]) }}</td>@endforeach
+          @foreach(['imsak', 'fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha'] as $k)<td @class(['ps-aux' => in_array($k, ['imsak', 'sunrise'])])>{{ PrayerTimes::hhmm($r['t'][$k]) }}</td>@endforeach
         </tr>
         @endforeach
       </tbody>
     </table>
   </div>
 
-  <p class="src-note">Dihitung secara astronomis dengan parameter Kemenag RI (Subuh 20°, Isya 18°, ihtiyath 2 menit) untuk koordinat masjid. Imsak 10 menit sebelum Subuh. Selisih dengan jadwal resmi Kemenag umumnya tidak lebih dari 1 menit. Sudah dicocokkan dengan jadwal masjid.</p>
+  <p class="src-note">Dihitung secara astronomis dengan parameter Kemenag RI (Subuh 20°, Isya 18°, ihtiyath 2 menit) untuk koordinat masjid. Imsak 10 menit sebelum Subuh. Di layar ponsel, kolom Imsak dan Terbit disembunyikan agar kelima waktu shalat terlihat; keduanya tetap ada saat dicetak atau di layar lebar. Selisih dengan jadwal resmi Kemenag umumnya tidak lebih dari 1 menit. Sudah dicocokkan dengan jadwal masjid.</p>
 </section>
 @endsection

@@ -9,7 +9,7 @@
         @php $days = $c->daysToRamadhan($today); @endphp
         <p class="n-meta">{{ $days > 0 ? 'Hitung mundur' : 'Sedang berlangsung' }}</p>
         <h3 id="camp-{{ $c->id }}">{{ $c->title }}</h3>
-        @if($days > 0)<p class="camp-count"><b>&plusmn; {{ $days }}</b> hari menuju 1 Ramadhan {{ $c->hijri_year }} H<small>Perkiraan kalender Umm al-Qura, {{ $c->ramadhanStart()->translatedFormat('j F Y') }}. Penetapan resmi menunggu pengumuman.</small></p>
+        @if($days > 0)<p class="camp-count"><b>&plusmn; {{ $days }} hari</b> lagi menuju 1 Ramadhan {{ $c->hijri_year }} H<small>Perkiraan kalender Umm al-Qura, {{ $c->ramadhanStart()->translatedFormat('j F Y') }}. Penetapan resmi menunggu pengumuman.</small></p>
         @else<p class="camp-count"><b>Ramadhan {{ $c->hijri_year }} H</b> sedang berlangsung</p>@endif
       @else
         <p class="n-meta">Kampanye donasi</p>

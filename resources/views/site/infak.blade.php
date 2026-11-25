@@ -2,16 +2,12 @@
 @php $pusat = $site['contacts'][0] ?? null; $wa = fn ($n) => \App\Support\SafeHtml::wa($n); @endphp
 @section('content')
 <section class="view">
-  @include('site.partials.phead', ['crumb' => 'Infak', 'ar' => 'الإنفاق', 'eyebrow' => 'Infak & sedekah', 'h1' => 'Infak untuk masjid', 'lede' => 'Salurkan infak hanya ke rekening atau QRIS yang tercantum di halaman ini. Setiap data di sini diperiksa dan disetujui oleh dua pengurus.'])
+  @include('site.partials.phead', ['crumb' => 'Infak', 'ar' => 'الإنفاق', 'eyebrow' => 'Infak & sedekah', 'h1' => 'Infak untuk masjid', 'lede' => 'Salurkan infak hanya ke rekening atau QRIS yang tercantum di halaman ini. Rekening operasional diperiksa dan disetujui dua pengurus; rekening kampanye mengikuti poster resminya.'])
 
   <div class="callout warn infak-warn" role="note">
     <strong>Waspada penipuan.</strong> Pengurus tidak pernah meminta transfer lewat pesan pribadi, telepon, atau nomor rekening yang tidak tercantum di sini.
     @if($pusat) Bila ragu, tanyakan ke <a href="{{ $wa($pusat['number']) }}" target="_blank" rel="noopener">{{ $pusat['label'] }} ({{ $pusat['number'] }})</a>.@endif
   </div>
-
-  @if($campaigns->isNotEmpty())
-  <section class="stack" aria-labelledby="camp-h"><h2 id="camp-h">Kampanye donasi</h2>@include('site.partials.campaigns')</section>
-  @endif
 
   <div class="infak-grid">
   <div>
@@ -53,6 +49,10 @@
     </ol>
   </aside>
   </div>
+
+  @if($campaigns->isNotEmpty())
+  <section class="stack" aria-labelledby="camp-h"><h2 id="camp-h">Kampanye donasi</h2>@include('site.partials.campaigns')</section>
+  @endif
 
   <p class="infak-report">@include('site.partials.icon',['name'=>'arrow','size'=>16]) <a href="{{ route('laporan') }}">Lihat laporan penggunaan infak setiap bulan</a></p>
   <p class="src-note">Situs ini tidak memproses pembayaran dan tidak menyimpan data transfer Anda. Untuk konfirmasi atau pertanyaan, hubungi <a href="{{ route('kontak') }}">sekretariat</a>.</p>

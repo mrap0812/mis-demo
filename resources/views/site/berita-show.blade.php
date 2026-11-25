@@ -19,7 +19,7 @@
   @if($cover)<figure class="art-cover"><img src="{{ $cover }}"{!! \App\Support\Img::attrs($post->cover, '(max-width: 1100px) 100vw, 1040px') !!} alt="" width="1200" height="675" decoding="async" fetchpriority="high"></figure>@endif
 
   <div class="art-grid">
-    <div class="prose">{!! $post->safeBody() !!}</div>
+    <div class="prose">{!! $post->safeBody((bool) $cover) !!}</div>
     <aside class="art-side" aria-label="Bagikan">
       <div class="share">
         <p class="share-t">Bagikan</p>

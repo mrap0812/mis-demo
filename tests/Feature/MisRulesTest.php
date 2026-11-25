@@ -147,4 +147,15 @@ class MisRulesTest extends TestCase
         $this->get('/kajian/tafsir/20261013')->assertNotFound(); // Selasa bukan jadwal tafsir
         $this->get('/berita')->assertOk()->assertSee('Berkurban 32 sapi');
     }
+
+    public function test_isi_impor_memakai_host_berjalan_dan_gambar_pembuka_tidak_ganda(): void
+    {
+        $p = new Post(['body' => '<p></p><figure class="wp-block-image"><img src="http://127.0.0.1:8010/storage/wp/a.jpg" alt=""/></figure><p>Isi</p>']);
+        config(['filesystems.disks.public.url' => 'https://mis.id/storage']);
+        \Illuminate\Support\Facades\Storage::forgetDisk('public');
+        $this->assertStringNotContainsString('127.0.0.1', $p->safeBody());
+        $this->assertStringContainsString('https://mis.id/storage/wp/a.jpg', $p->safeBody());
+        $this->assertStringNotContainsString('<img', $p->safeBody(true));
+        $this->assertStringContainsString('<p>Isi</p>', $p->safeBody(true));
+    }
 }
